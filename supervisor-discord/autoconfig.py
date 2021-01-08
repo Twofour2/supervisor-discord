@@ -121,16 +121,16 @@ def example_format(message, process_name):
 def saveConfig():
     console.print("[dodger_blue3]Saving configuration...[/dodger_blue3]")
     time.sleep(1)
-    if os.path.exists("./config.yaml"):
+    if os.path.exists("config.yaml"):
         overwrite = Confirm.ask("[bold red]Warning file already exists. Overwrite?[/bold red]")
         if overwrite:
-            with open("./config.yaml", "w") as f:
+            with open("config.yaml", "w") as f:
                 f.write(yaml.dump(processes))
         else:
             console.print(f"Just in case, here's your config anyways: \n{yaml.dump(processes)}")
             exit()
     else:
-        with open("./config.yaml", "w") as f:
+        with open("config.yaml", "w") as f:
             f.write(yaml.dump(processes, explicit_start=True))
     console.print("[bold blue]Config has been saved to config.yaml.[/bold blue]")
     exit()
