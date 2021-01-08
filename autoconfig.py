@@ -48,7 +48,7 @@ def supervisorSetup():
             webhookurl = input("Enter the discord webhook url: ")
             json = {'content': f"**supervisor-discord is now active on this channel.**"}
             try:
-                r = requests.post(url=webhookurl, json=json)  # send messsage
+                requests.post(url=webhookurl, json=json)  # send message
                 console.input(f"Check that the message [bold black]\"{json.get('content').replace('**', '')}\"[/bold black] has been posted then press <[magenta]enter[/magenta]>.")
                 break
             except Exception as e:
@@ -86,8 +86,9 @@ def supervisorSetup():
         clear()
         while True:
             console.rule("[bold blue]Formatting", style="rule")
-            console.print("[bold]Availible formats[/bold]: [dodger_blue3]{{process_name}}, {{timestamp}}, {{from_state}}, {{to_state}}[/dodger_blue3]")
+            console.print("[bold]Availible formats[/bold]: [dodger_blue3]{{process_name}}, {{from_state}}, {{to_state}}[/dodger_blue3]")
             console.print("[bold]Example:[/bold] [dodger_blue3]\"{{process_name}} changed to state {{to_state}}\"[/dodger_blue3]")
+            console.print("Use datetime's strftime() format to insert timestamps. See https://strftime.org/ for reference.")
             console.print("This field supports discords markdown format, see https://gist.github.com/matthewzring/9f7bbfd102003963f9be7dbcf7d40e51 for usage.")
             fmt = console.input("Write out below how you would like to format the message for this process, leave blank for default:\n")
             if fmt == "":
@@ -112,9 +113,10 @@ def supervisorSetup():
             break
 
 def example_format(message, process_name):
-    examples = {'{{process_name}}':process_name, '{{timestamp}}':str(datetime.datetime.now()), '{{from_state}}':'RUNNING', '{{to_state}}':'EXITED'}
+    examples = {'{{process_name}}':process_name, '{{from_state}}':'RUNNING', '{{to_state}}':'EXITED'}
     for i, j in examples.items():
         message = message.replace(i,j)
+    message = datetime.datetime.now().strftime(message)
     return message
 
 def saveConfig():
