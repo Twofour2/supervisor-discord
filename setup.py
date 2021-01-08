@@ -16,7 +16,7 @@ setup(
   long_description=README,
   author = 'chaos_a',
   url = 'https://github.com/chaosay/supervisor-discord',
-  #download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.0.tar.gz',    # I explain this later on
   keywords = ['supervisor', 'discord', 'alerts'],
   install_requires=[
           'pyYaml',
