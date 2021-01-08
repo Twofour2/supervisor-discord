@@ -20,7 +20,6 @@ script_dir = os.path.split(os.path.realpath(__file__))[0]  # get where this scri
 
 logging.basicConfig(filename=script_dir+'/supervisor-discord.log',level=logging.INFO, format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',datefmt='%Y-%m-%d %H:%M:%S')
 
-webhookChannels = {}
 processes = {} # {"process_name": {"webhookURL": "url", alerts:["STARTED", "EXITED"], "message_format":"{{process_name}} changed to state {{to_state}}"}
 
 def clear(numlines=100):
@@ -94,7 +93,7 @@ def supervisorSetup():
             if fmt == "":
                 fmt = "{{process_name}} changed to state {{to_state}}"
             prev = example_format(fmt, process_name)
-            r = requests.post(url=webhookurl, json={'content':prev})  # send message
+            requests.post(url=webhookurl, json={'content':prev})  # send message
             console.print("[i dark_blue]Posted preview message to discord.[/i dark_blue]")
             accept = Confirm.ask("Does the message appear okay?")
             if accept:
