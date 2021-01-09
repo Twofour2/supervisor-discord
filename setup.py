@@ -10,7 +10,7 @@ except (IOError, OSError):
 setup(
   name = 'supervisordiscord',
   packages = ['supervisordiscord'],
-  version = '1.0.0',
+  version = '1.0.1',
   license='GNU GPL v3',
   description = 'Connect supervisor to discord via webhooks',
   long_description=README,
