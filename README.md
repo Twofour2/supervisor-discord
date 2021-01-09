@@ -6,15 +6,11 @@ Connects supervisor alerts to discord using webhooks.
 pip install supervisor-discord
 ```
 
-## Supervisor.conf
-[eventlistener:supervisor-discord]
-command=python
+## Configure
+Either run `supervisor-discord -s`, or create config.yaml manually.
 
-## Setup
-Navigate to site-packages > supervisor-discord.
-Either run autoconfig.py, or create config.yaml manually.
+config.yaml can be in one of two locations, `/etc/supervisordiscord/config.yaml` or the location where site-packages are installed on your system.
 
-## config.yaml
 ```
 example: # process name
   alerts: # list of process states that can trigger this message
@@ -35,4 +31,13 @@ example: # process name
 ```
 {{process_name}}, {{from_state}}, {{to_state}}
 ```
+
+## Supervisor.conf
+Ensure that supervisor-discord is on your system `PATH`.
+```
+[eventlistener:supervisor-discord]
+command=supervisor-discord
+events=PROCESS_STATE
+```
+
 
