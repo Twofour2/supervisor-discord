@@ -17,7 +17,7 @@ setup(
   long_description_content_type='text/markdown',
   author = 'chaos_a',
   url = 'https://github.com/chaosay/supervisor-discord',
-  download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.1.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.1.tar.gz',
   keywords = ['supervisor', 'discord', 'alerts'],
   data_files=[('/etc/supervisordiscord/', ['config.yaml'])],
   scripts=['bin/supervisor-discord'],
