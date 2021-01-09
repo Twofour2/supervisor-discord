@@ -56,7 +56,7 @@ def notify_user(headers, data, recvTime):
         crashInfo = data_to_dict(data)  # convert data to a easy dictionary
         crashInfo["to_state"] = headers.get("eventname").replace("PROCESS_STATE_", "") # get the new process state out of headers, rename and put it somewhere more useful.
         pName = crashInfo.get("processname")
-        if pName in config:
+        if pName in config or pName.lower() == "all":
             pData = config.get(pName)
             if crashInfo.get("to_state") in pData.get("alerts"):
                 logging.info("Found process "+pName)

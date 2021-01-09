@@ -8,16 +8,16 @@ except (IOError, OSError):
     README = ''
 
 setup(
-  name = 'supervisordiscord',
+  name = 'supervisor-discord',
   packages = ['supervisordiscord'],
-  version = '1.1',
+  version = '1.2',
   license='GNU GPL v3',
   description = 'Connect supervisor to discord via webhooks',
   long_description=README,
   long_description_content_type='text/markdown',
   author = 'chaos_a',
   url = 'https://github.com/chaosay/supervisor-discord',
-  download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.1.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.2.tar.gz',
   keywords = ['supervisor', 'discord', 'alerts'],
   data_files=[('/etc/supervisordiscord/', ['config.yaml'])],
   scripts=['bin/supervisor-discord'],

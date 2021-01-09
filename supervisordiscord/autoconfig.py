@@ -4,6 +4,7 @@ import os
 import logging
 import datetime
 import time
+from pathlib import Path
 from rich.console import Console
 from rich.theme import Theme
 from rich.prompt import Confirm
@@ -36,13 +37,45 @@ numlines is an optional argument used only as a fall-back.
     # Fallback for other operating systems.
     print('\n' * numlines)
 
+def getProcesses():
+    # find supervisord.conf
+    possiblePaths = [Path("/etc/supervisord.conf"), Path("/etc/supervisord/supervisord.conf")]
+    programNames = []
+    for path in possiblePaths:
+        if path.exists():
+            with open(path, "r") as conf:
+                for line in conf:
+                    if line.startswith("[program:"):
+                        programNames.append(line.replace("[program:", "").replace("]\n", "")) # strip down to just process name
+            break
+    else:
+        print("Could not automatically find supervisord.conf")
+        while True:
+            confLoc = input("Enter supervisord.conf location (or press <enter> to skip this):").strip()
+            if confLoc != "":
+                if Path(confLoc).exists():
+                    print("Found supervisord.conf")
+                    with open(confLoc, "r") as conf:
+                        for line in conf:
+                            if line.startswith("[program:"):
+                                programNames.append(line.replace("[program:", "").replace("]\n", ""))
+                    break
+                else:
+                    print("Could not find supervisord.conf at given location.")
+            else:
+                break
+    return programNames
+
 def supervisorSetup():
-    # basic stuff
+    programNames = getProcesses()
     while True:
-        clear()
+        clear() # TODO: silence "TERM environment variable not set."
         while True:
             console.rule("[bold blue]Setup", style="rule")
-            process_name = input("Enter the process name: ")
+            if len(programNames) > 0:
+                console.print(f"Found processes in supervisor configuration file: \n{programNames}")
+            console.print("Enter \"all\" to trigger on any process")
+            process_name = input("Enter process name: ")
             console.print("Create a webhook in discord (Server settings > integrations > webhooks > create webhook)", style="info")
             webhookurl = input("Enter the discord webhook url: ")
             json = {'content': f"**supervisordiscord is now active on this channel.**"}
