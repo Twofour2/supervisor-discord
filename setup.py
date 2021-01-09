@@ -8,8 +8,8 @@ except (IOError, OSError):
     README = ''
 
 setup(
-  name = 'supervisor-discord',
-  packages = ['supervisor-discord'],
+  name = 'supervisordiscord',
+  packages = ['supervisordiscord'],
   version = '1.0.0',
   license='GNU GPL v3',
   description = 'Connect supervisor to discord via webhooks',
@@ -19,7 +19,8 @@ setup(
   url = 'https://github.com/chaosay/supervisor-discord',
   download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.0.tar.gz',    # I explain this later on
   keywords = ['supervisor', 'discord', 'alerts'],
-  scripts=['supervisor-discord/alertHandler.py'],
+  data_files=[('/etc/supervisordiscord/', [])],
+  scripts=['bin/supervisor-discord'],
   install_requires=[
           'pyYaml',
           'ratelimit',

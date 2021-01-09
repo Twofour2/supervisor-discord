@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import sys
+from supervisordiscord import alertHandler
+from supervisordiscord import autoconfig
+
+if "-s" in sys.argv or "-setup" in sys.argv:
+    autoconfig.run()
+else:
+    alertHandler.run()
