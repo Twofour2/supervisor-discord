@@ -19,7 +19,7 @@ setup(
   url = 'https://github.com/chaosay/supervisor-discord',
   download_url = 'https://github.com/chaosay/supervisor-discord/archive/1.0.tar.gz',    # I explain this later on
   keywords = ['supervisor', 'discord', 'alerts'],
-  data_files=[('/etc/supervisordiscord/', [])],
+  data_files=[('/etc/supervisordiscord/', ['config.yaml'])],
   scripts=['bin/supervisor-discord'],
   install_requires=[
           'pyYaml',
