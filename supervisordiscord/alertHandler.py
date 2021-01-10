@@ -6,6 +6,7 @@ import yaml
 from ratelimit import limits
 import requests
 from pathlib import Path
+from supervisordiscord import autoconfig
 
 script_dir = os.path.split(os.path.realpath(__file__))[0]  # get the location of this script
 
@@ -92,21 +93,36 @@ def sendMsg(recvTime, crashInfo, pData):
 # same as if but for PATH script
 def run():
     global config
-    configLocations = [Path("/etc/supervisordiscord/config.yaml"), Path(script_dir + "config.yaml")]
-    for configLoc in configLocations:
-        if configLoc.exists():
-            logging.info(f"Using config at {configLoc}")
-            f = open(configLoc, "r+")
+    configLoc = Path("~/.config/supervisordiscord/config.yaml").expanduser()
+    if "-s" in sys.argv or "--setup" in sys.argv:
+        autoconfig.run()
+        exit()
+    elif "-c" in sys.argv:
+        configPath = Path("~/.config/supervisordiscord/").expanduser()
+        configPath.mkdir(parents=True, exist_ok=True)
+        with open(configLoc, "w"):
+            pass  # create empty file
+        print(f"Created config.yaml at {configLoc}")
+        exit()
+
+    # normal
+    if configLoc.exists():
+        logging.info(f"Using config at {configLoc}")
+        with open(configLoc, "r+") as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
             logging.info(config)
             main()
-            f.close()
-            break
-        else:
-            logging.warning(f"Config at {configLoc} does not exist.")
     else:
-        logging.error(f"Could not find any config files.")
-        raise FileNotFoundError("Could not find any config files")
+        logging.warning(f"Config at {configLoc} does not exist. Creating...")
+        configPath = Path("~/.config/supervisordiscord/").expanduser()
+        configPath.mkdir(parents=True, exist_ok=True)
+        with open(configLoc, "w"):
+            pass # create empty file
+        logging.info(f"Created config at {configLoc}")
+        with open(configLoc, "r+") as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
+            logging.info(config)
+            main()
 
 if __name__ == '__main__':
     run()

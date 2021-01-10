@@ -7,9 +7,9 @@ pip install supervisor-discord
 ```
 
 ## Configure
-Either run `supervisor-discord -s`, or create config.yaml manually.
+Either run `supervisor-discord -s`, or create config.yaml manually using `supervisor-discord -c`.
 
-config.yaml can be in one of two locations, `/etc/supervisordiscord/config.yaml` or the location where site-packages are installed on your system.
+config.yaml is typically located at `~/.config/supervisordiscord/config.yaml`.
 
 ```
 example: # process name

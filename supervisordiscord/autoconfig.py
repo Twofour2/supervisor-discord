@@ -155,25 +155,20 @@ def saveConfig():
     console.print("[bold dodger_blue3]Saving configuration...[/bold dodger_blue3]")
     time.sleep(1)
 
-    if os.access("/etc/", os.W_OK):  # we can open /etc so save there
-        if not os.path.exists("/etc/supervisordiscord"):
-            os.mkdir("/etc/supervisordiscord")
-        configLocation = "/etc/supervisordiscord/"
-    else:
-        configLocation = ""
+    configLocation = str(Path("~/.config/supervisordiscord/").expanduser())
 
-    if os.path.exists(configLocation+"config.yaml"):
-        overwrite = Confirm.ask(f"[bold red]Warning file {configLocation}config.yaml already exists. Overwrite?[/bold red]")
+    if os.path.exists(configLocation+"/config.yaml"):
+        overwrite = Confirm.ask(f"[bold red]Warning file {configLocation}/config.yaml already exists. Overwrite?[/bold red]")
         if overwrite:
-            with open(configLocation+"config.yaml", "w") as f:
+            with open(configLocation+"/config.yaml", "w") as f:
                 f.write(yaml.dump(processes, explicit_start=True))
-                console.print(f"[bold blue]Config has been saved to {configLocation}config.yaml.[/bold blue]")
+                console.print(f"[bold blue]Config has been saved to {configLocation}/config.yaml.[/bold blue]")
         else:
             console.print(f"Here is your auto generated config file:\n{yaml.dump(processes, explicit_start=True)}")
     else:
-        with open(configLocation+"config.yaml", "w") as f:
+        with open(configLocation+"/config.yaml", "w") as f:
             f.write(yaml.dump(processes, explicit_start=True))
-            console.print(f"[bold blue]Config has been saved to {configLocation}config.yaml.[/bold blue]")
+            console.print(f"[bold blue]Config has been saved to {configLocation}/config.yaml.[/bold blue]")
 
     exit()
 
