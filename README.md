@@ -1,5 +1,5 @@
 # supervisor-discord
-Connects supervisor alerts to discord using webhooks.
+Connects supervisor alerts to discord using webhooks. Supports customizable messages, discord markdown and timestamps.
 
 ## Install
 ```
@@ -7,12 +7,12 @@ pip install supervisor-discord
 ```
 
 ## Configure
-Either run `supervisor-discord -s`, or create config.yaml manually using `supervisor-discord -c`.
+Either run `supervisor-discord -s` to run the setup program, or create config.yaml manually using `supervisor-discord -c`.
 
 config.yaml is typically located at `~/.config/supervisordiscord/config.yaml`.
 
 ```
-example: # process name
+example: # process name or "all" for any process
   alerts: # list of process states that can trigger this message
   - STARTING
   - RUNNING
@@ -33,7 +33,7 @@ example: # process name
 ```
 
 ## Supervisor.conf
-Ensure that supervisor-discord is on your system `PATH`.
+Ensure that supervisor-discord is on your system `PATH`. Or write out the full path to the command using `whereis`.
 ```
 [eventlistener:supervisor-discord]
 command=supervisor-discord
